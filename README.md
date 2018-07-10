@@ -44,20 +44,15 @@ o := textree.NewRenderOptions()
 root.Render(os.Stdout, o)
 ```
 
-Output:
-
-```
-└──┬ 1
-   ├──┬ 1.1
-   │  ├─── 1.1.1
-   │  └─── 1.1.2
-   └──┬ 1.2
-      └─── 1.2.1
-```
-
 For complete usage of **textree**, see the full [package docs](https://godoc.org/github.com/plouc/textree).
 
 ## Examples
+
+Some examples are available in the `examples/` directory.
+
+```
+go run examples/main.go
+```
 
 ```
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -66,6 +61,9 @@ For complete usage of **textree**, see the full [package docs](https://godoc.org
     using default options
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+ ┌ ROOT
+ │
  └──┬ 1
     │
     ├──┬ 1.1
@@ -93,9 +91,12 @@ For complete usage of **textree**, see the full [package docs](https://godoc.org
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   Dotted example
-    using *RenderOptions.Dotted()
+    using RenderOptions.Dotted()
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+ ┌ ROOT
+ :
  ···· 1
     :
     :··· 1.1
@@ -123,9 +124,12 @@ For complete usage of **textree**, see the full [package docs](https://godoc.org
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   Rounded example
-    using *RenderOptions.Rounded()
+    using RenderOptions.Rounded()
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+ ┌ ROOT
+ │
  ╰──╮ 1
     │
     ├──╮ 1.1
@@ -153,9 +157,10 @@ For complete usage of **textree**, see the full [package docs](https://godoc.org
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   Compact example
-    using *RenderOptions.Compact()
+    using RenderOptions.Compact()
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+┌ ROOT
 └─┬ 1
   ├─┬ 1.1
   │ ├── 1.1.1

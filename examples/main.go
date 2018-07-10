@@ -8,29 +8,32 @@ import (
 )
 
 func getSampleTree() *textree.Node {
-	root := textree.NewNode("1")
+	root := textree.NewNode("ROOT")
 
-	childA := textree.NewNode("1.1")
-	root.Append(childA)
-	childA.Append(textree.NewNode("1.1.1"))
-	childA.Append(textree.NewNode("1.1.2"))
+	node1 := textree.NewNode("1")
+	root.Append(node1)
 
-	childB := textree.NewNode("1.2")
-	root.Append(childB)
-	childB.Append(textree.NewNode("1.2.1"))
+	node11 := textree.NewNode("1.1")
+	node1.Append(node11)
+	node11.Append(textree.NewNode("1.1.1"))
+	node11.Append(textree.NewNode("1.1.2"))
 
-	childC := textree.NewNode("1.3")
-	root.Append(childC)
-	childC.Append(textree.NewNode("1.3.1"))
-	childCChild := textree.NewNode("1.3.2")
-	childC.Append(childCChild)
-	childCChild.Append(textree.NewNode("1.3.2.1"))
-	childCChild.Append(textree.NewNode("1.3.2.2"))
-	childC.Append(textree.NewNode("1.3.3"))
+	node12 := textree.NewNode("1.2")
+	node1.Append(node12)
+	node12.Append(textree.NewNode("1.2.1"))
 
-	root.Append(textree.NewNode("1.4"))
+	node13 := textree.NewNode("1.3")
+	node1.Append(node13)
+	node13.Append(textree.NewNode("1.3.1"))
+	node132 := textree.NewNode("1.3.2")
+	node13.Append(node132)
+	node132.Append(textree.NewNode("1.3.2.1"))
+	node132.Append(textree.NewNode("1.3.2.2"))
+	node13.Append(textree.NewNode("1.3.3"))
 
-	root.Append(textree.NewNode("1.5"))
+	node1.Append(textree.NewNode("1.4"))
+
+	node1.Append(textree.NewNode("1.5"))
 
 	return root
 }
@@ -55,7 +58,7 @@ func basicExample() {
 }
 
 func dottedExample() {
-	title("Dotted example", "using *RenderOptions.Dotted()")
+	title("Dotted example", "using RenderOptions.Dotted()")
 
 	root := getSampleTree()
 
@@ -66,7 +69,7 @@ func dottedExample() {
 }
 
 func roundedExample() {
-	title("Rounded example", "using *RenderOptions.Rounded()")
+	title("Rounded example", "using RenderOptions.Rounded()")
 
 	root := getSampleTree()
 
@@ -77,7 +80,7 @@ func roundedExample() {
 }
 
 func compactExample() {
-	title("Compact example", "using *RenderOptions.Compact()")
+	title("Compact example", "using RenderOptions.Compact()")
 
 	root := getSampleTree()
 

@@ -18,10 +18,10 @@ type RenderOptions struct {
 	NodeSymbol     string
 
 	// dimensions
-	HorizontalLinkLength int
+	MarginTop            int
 	MarginLeft           int
+	HorizontalLinkLength int
 	LabelPaddingLeft     int
-	LeafLinkLength       int
 	ChildrenMarginTop    int
 	ChildrenMarginBottom int
 }
@@ -39,10 +39,10 @@ func NewRenderOptions() *RenderOptions {
 		NodeSymbol:     "",
 
 		// dimensions
-		HorizontalLinkLength: 2,
+		MarginTop:            1,
 		MarginLeft:           1,
+		HorizontalLinkLength: 2,
 		LabelPaddingLeft:     1,
-		LeafLinkLength:       2,
 		ChildrenMarginTop:    1,
 		ChildrenMarginBottom: 1,
 	}
@@ -69,10 +69,10 @@ func (o *RenderOptions) Dotted() {
 
 // Compact override dimensions for a compact rendering
 func (o *RenderOptions) Compact() {
-	o.HorizontalLinkLength = 1
+	o.MarginTop = 0
 	o.MarginLeft = 0
+	o.HorizontalLinkLength = 1
 	o.LabelPaddingLeft = 1
-	o.LeafLinkLength = 1
 	o.ChildrenMarginTop = 0
 	o.ChildrenMarginBottom = 0
 }
@@ -83,27 +83,37 @@ func (n *Node) Render(w io.Writer, o *RenderOptions) {
 
 	line := marginLeft
 
-	reversedAncestors := n.ReversedAncestors()
-	for _, ancestor := range reversedAncestors {
-		if ancestor.isLast {
-			line += strings.Repeat(" ", o.HorizontalLinkLength+1)
+	if n.IsRoot() {
+		fmt.Fprint(w, strings.Repeat("\n", o.MarginTop))
+		line += o.RootLink
+	} else {
+		reversedAncestors := n.ReversedAncestors()
+		for _, ancestor := range reversedAncestors {
+			if ancestor.IsRoot() {
+				continue
+			}
+
+			if ancestor.isLast {
+				line += strings.Repeat(" ", o.HorizontalLinkLength+1)
+			} else {
+				line += o.VerticalLink
+				line += strings.Repeat(" ", o.HorizontalLinkLength)
+			}
+		}
+
+		if n.isLast {
+			line += o.LastChildLink
 		} else {
-			line += o.VerticalLink
-			line += strings.Repeat(" ", o.HorizontalLinkLength)
+			line += o.ChildLink
+		}
+		if n.HasChild() {
+			line += strings.Repeat(o.HorizontalLink, o.HorizontalLinkLength)
+			line += o.ChildrenLink
+		} else {
+			line += strings.Repeat(o.HorizontalLink, o.HorizontalLinkLength+1)
 		}
 	}
 
-	if n.isLast {
-		line += o.LastChildLink
-	} else {
-		line += o.ChildLink
-	}
-	if n.HasChild() {
-		line += strings.Repeat(o.HorizontalLink, o.HorizontalLinkLength)
-		line += o.ChildrenLink
-	} else {
-		line += strings.Repeat(o.HorizontalLink, o.HorizontalLinkLength+1)
-	}
 	line += o.NodeSymbol
 	line += strings.Repeat(" ", o.LabelPaddingLeft)
 	line += n.Label
@@ -113,6 +123,9 @@ func (n *Node) Render(w io.Writer, o *RenderOptions) {
 	if n.HasChild() && o.ChildrenMarginTop > 0 {
 		childrenMarginTop := marginLeft
 		for _, ancestor := range n.Children[0].ReversedAncestors() {
+			if ancestor.IsRoot() {
+				continue
+			}
 			if ancestor.isLast {
 				childrenMarginTop += strings.Repeat(" ", o.HorizontalLinkLength+1)
 			} else {
@@ -134,6 +147,10 @@ func (n *Node) Render(w io.Writer, o *RenderOptions) {
 	if n.IsLeaf() && n.isLast && o.ChildrenMarginBottom > 0 {
 		childrenMarginBottom := marginLeft
 		for _, ancestor := range n.ReversedAncestors() {
+			if ancestor.IsRoot() {
+				continue
+			}
+
 			if ancestor.isLast {
 				childrenMarginBottom += strings.Repeat(" ", o.HorizontalLinkLength+1)
 			} else {
