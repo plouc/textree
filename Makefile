@@ -1,4 +1,4 @@
-.PHONY: install test test_unit lint fmt_check fmt
+.PHONY: install update test test_unit lint fmt_check fmt
 .DEFAULT: help
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -38,19 +38,22 @@ help: ##prints help
 #
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-install:  ##@deps Install dependencies
+install: ##@deps Install dependencies
 	@echo "${YELLOW}Installing dependencies${RESET}"
-	go get -u gopkg.in/alecthomas/gometalinter.v2
-	go get -u github.com/golang/lint
-	go get -u github.com/mdempsky/unconvert
-	go get -u github.com/tsenart/deadcode
-	go get -u github.com/gordonklaus/ineffassign
-	go get -u github.com/mdempsky/maligned
-	go get -u github.com/opennota/check
-	go get -u github.com/client9/misspell/cmd/misspell
-	go list -f '{{range .Imports}}{{.}} {{end}}' ./... | xargs go get -u
-	go list -f '{{range .TestImports}}{{.}} {{end}}' ./... | xargs go get -u
+	go get ${INSTALL_OPTS} gopkg.in/alecthomas/gometalinter.v2
+	go get ${INSTALL_OPTS} github.com/golang/lint
+	go get ${INSTALL_OPTS} github.com/mdempsky/unconvert
+	go get ${INSTALL_OPTS} github.com/tsenart/deadcode
+	go get ${INSTALL_OPTS} github.com/gordonklaus/ineffassign
+	go get ${INSTALL_OPTS} github.com/mdempsky/maligned
+	go get ${INSTALL_OPTS} github.com/opennota/check
+	go get ${INSTALL_OPTS} github.com/client9/misspell/cmd/misspell
+	go list -f '{{range .Imports}}{{.}} {{end}}' ./... | xargs go get ${INSTALL_OPTS}
+	go list -f '{{range .TestImports}}{{.}} {{end}}' ./... | xargs go get ${INSTALL_OPTS}
 	@echo "${GREEN}✔ successfully installed dependencies${RESET}\n"
+
+update: ##@deps Update dependencies
+	@${MAKE} install INSTALL_OPTS=-u
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
