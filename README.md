@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/plouc/textree)](https://goreportcard.com/report/github.com/plouc/textree)
 [![GitHub issues](https://img.shields.io/github/issues/plouc/textree.svg)](https://github.com/plouc/textree/issues)
 
-**textree** is a go package to easily pretty print nested trees in various text formats.
+**textree** is a go package to easily pretty print nested trees in plain text.
 
 ## Install
 

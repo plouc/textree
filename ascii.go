@@ -5,7 +5,8 @@ import (
 	"strings"
 )
 
-type AsciiOptions struct {
+// ASCIIOptions is used to customize ASCII rendering
+type ASCIIOptions struct {
 	// symbols
 	HorizontalLink string
 	VerticalLink   string
@@ -19,8 +20,9 @@ type AsciiOptions struct {
 	ChildrenPaddingPost int
 }
 
-func NewAsciiOptions() *AsciiOptions {
-	return &AsciiOptions{
+// NewASCIIOptions generates default ASCII rendering options
+func NewASCIIOptions() *ASCIIOptions {
+	return &ASCIIOptions{
 		// symbols
 		HorizontalLink: "─",
 		VerticalLink:   "│",
@@ -35,7 +37,8 @@ func NewAsciiOptions() *AsciiOptions {
 	}
 }
 
-func (n *Node) RenderAscii(o *AsciiOptions) string {
+// RenderASCII renders a pretty tree structure
+func (n *Node) RenderASCII(o *ASCIIOptions) string {
 	line := ""
 
 	reversedAncestors := n.ReversedAncestors()
@@ -79,7 +82,7 @@ func (n *Node) RenderAscii(o *AsciiOptions) string {
 	}
 
 	for _, c := range n.Children {
-		lines = append(lines, c.RenderAscii(o))
+		lines = append(lines, c.RenderASCII(o))
 	}
 
 	if n.HasChild() && o.ChildrenPaddingPost > 0 {
