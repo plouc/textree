@@ -40,9 +40,9 @@ childA.Append(textree.NewNode("1.2.1"))
 Render the tree using the root element:
 
 ```go
-o := textree.NewAsciiOptions()
+o := textree.NewRenderOptions()
 
-fmt.Println(root.RenderAscii(o))
+fmt.Println(root.Render(o))
 ```
 
 Output:
