@@ -8,6 +8,6 @@ go:
   - "1.10.x"
   - master
 
-install: make install
+install: make install --no-print-directory
 
-script: make test
+script: make test --no-print-directory
