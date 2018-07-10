@@ -66,6 +66,11 @@ func (n *Node) IsLeaf() bool {
 	return !n.HasChild()
 }
 
+// IsLast checks if node is last node of its branch
+func (n *Node) IsLast() bool {
+	return n.isLast
+}
+
 // Append appends a new child to the node
 func (n *Node) Append(c *Node) {
 	if c.Parent() != nil {
