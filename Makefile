@@ -1,4 +1,4 @@
-.PHONY: install test test_unit vet fmt_check fmt
+.PHONY: install test test_unit lint fmt_check fmt
 .DEFAULT: help
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -40,7 +40,14 @@ help: ##prints help
 
 install:  ##@deps Install dependencies
 	@echo "${YELLOW}Installing dependencies${RESET}"
-	go get -u golang.org/x/lint/golint
+	go get -u gopkg.in/alecthomas/gometalinter.v2
+	go get -u github.com/golang/lint
+	go get -u github.com/mdempsky/unconvert
+	go get -u github.com/tsenart/deadcode
+	go get -u github.com/gordonklaus/ineffassign
+	go get -u github.com/mdempsky/maligned
+	go get -u github.com/opennota/check
+	go get -u github.com/client9/misspell/cmd/misspell
 	go list -f '{{range .Imports}}{{.}} {{end}}' ./... | xargs go get -u
 	go list -f '{{range .TestImports}}{{.}} {{end}}' ./... | xargs go get -u
 	@echo "${GREEN}✔ successfully installed dependencies${RESET}\n"
@@ -54,7 +61,6 @@ install:  ##@deps Install dependencies
 test: ##@test Run all test steps
 	@echo "${YELLOW}Running all tests${RESET}\n"
 	@${MAKE} test_unit
-	@${MAKE} vet
 	@${MAKE} lint
 	@${MAKE} fmt_check
 	@echo "${GREEN}✔ well done!${RESET}\n"
@@ -64,14 +70,9 @@ test_unit: ##@test Run lib tests
 	@go test -v ./...
 	@echo "${GREEN}✔ unit tests successfully passed${RESET}\n"
 
-vet: ##@test Run go vet
-	@echo "${YELLOW}Running vet on cli${RESET}"
-	@go vet ./...
-	@echo "${GREEN}✔ vet passed without error${RESET}\n"
-
 lint: ##@test Run linter
 	@echo "${YELLOW}Linting${RESET}"
-	@golint -set_exit_status ./...
+	@gometalinter.v2 ./...
 	@echo "${GREEN}✔ linter passed without error${RESET}\n"
 
 fmt_check: ##@test Check formatting
