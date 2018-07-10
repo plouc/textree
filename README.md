@@ -1,5 +1,6 @@
 # textree
 
+[![Build Status](https://travis-ci.org/plouc/textree.png?branch=master)](https://travis-ci.org/plouc/textree)
 [![GoDoc](https://godoc.org/github.com/plouc/textree?status.svg)](https://godoc.org/github.com/plouc/textree)
 [![GitHub license](https://img.shields.io/github/license/plouc/textree.svg)](https://github.com/plouc/textree/blob/master/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/plouc/textree)](https://goreportcard.com/report/github.com/plouc/textree)
