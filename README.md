@@ -17,7 +17,7 @@ go get github.com/plouc/textree
 
 ```go
 import (
-	"fmt"
+	"os"
 	"github.com/plouc/textree"
 )
 ```
@@ -37,12 +37,11 @@ root.Append(childA)
 childA.Append(textree.NewNode("1.2.1"))
 ```
 
-Render the tree using the root element:
+Then render the tree using the root element:
 
 ```go
 o := textree.NewRenderOptions()
-
-fmt.Println(root.Render(o))
+root.Render(os.Stdout, o)
 ```
 
 Output:

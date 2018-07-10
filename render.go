@@ -2,6 +2,7 @@ package textree
 
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -37,8 +38,8 @@ func NewRenderOptions() *RenderOptions {
 	}
 }
 
-// Render renders a pretty tree structure
-func (n *Node) Render(o *RenderOptions) string {
+// Render renders a pretty tree structure to given io.Writer
+func (n *Node) Render(w io.Writer, o *RenderOptions) {
 	line := ""
 
 	reversedAncestors := n.ReversedAncestors()
@@ -63,7 +64,7 @@ func (n *Node) Render(o *RenderOptions) string {
 	}
 	line += fmt.Sprintf(" %s", n.Label)
 
-	lines := []string{line}
+	fmt.Fprintln(w, line)
 
 	if n.HasChild() && o.ChildrenPaddingPre > 0 {
 		childrenPrePadding := ""
@@ -77,19 +78,17 @@ func (n *Node) Render(o *RenderOptions) string {
 		childrenPrePadding += "│"
 
 		for i := 0; i < o.ChildrenPaddingPre; i++ {
-			lines = append(lines, childrenPrePadding)
+			fmt.Fprintln(w, childrenPrePadding)
 		}
 	}
 
 	for _, c := range n.Children {
-		lines = append(lines, c.Render(o))
+		c.Render(w, o)
 	}
 
 	if n.HasChild() && o.ChildrenPaddingPost > 0 {
 		for i := 0; i < o.ChildrenPaddingPost; i++ {
-			lines = append(lines, "")
+			fmt.Fprintln(w, "")
 		}
 	}
-
-	return strings.Join(lines, "\n")
 }
