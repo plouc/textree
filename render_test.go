@@ -75,7 +75,6 @@ var testCases = []struct {
 
 func TestRender(t *testing.T) {
 	ctx := gosnap.NewContext(t, "snapshots")
-	ctx.AutoUpdate = false
 
 	for _, testCase := range testCases {
 		s := ctx.NewSnapshot(testCase.name)

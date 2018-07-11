@@ -1,5 +1,7 @@
-.PHONY: install update test test_unit lint fmt_check fmt
+.PHONY: install update test test_unit update_snapshots lint fmt_check fmt
 .DEFAULT: help
+
+test_args ?=
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
@@ -62,10 +64,13 @@ test: ##@test Run all test steps
 	@${MAKE} fmt_check
 	@echo "${GREEN}✔ well done!${RESET}\n"
 
-test_unit: ##@test Run lib tests
+test_unit: ##@test Run lib tests, use `test_args` to add args to test command, eg. `make test_args="-u all" test`
 	@echo "${YELLOW}Running unit tests${RESET}"
-	@go test -v ./...
+	go test -v ${test_args} ./...
 	@echo "${GREEN}✔ unit tests successfully passed${RESET}\n"
+
+update_snapshots: ##@test Update test snapshots
+	@${MAKE} test_unit test_args="-u all"
 
 lint: ##@test Run linter
 	@echo "${YELLOW}Linting${RESET}"
