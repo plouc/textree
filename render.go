@@ -19,6 +19,7 @@ type RenderOptions struct {
 
 	// dimensions
 	MarginTop            int
+	MarginBottom         int
 	MarginLeft           int
 	HorizontalLinkLength int
 	LabelPaddingLeft     int
@@ -40,6 +41,7 @@ func NewRenderOptions() *RenderOptions {
 
 		// dimensions
 		MarginTop:            1,
+		MarginBottom:         1,
 		MarginLeft:           1,
 		HorizontalLinkLength: 2,
 		LabelPaddingLeft:     1,
@@ -70,6 +72,7 @@ func (o *RenderOptions) Dotted() {
 // Compact override dimensions for a compact rendering
 func (o *RenderOptions) Compact() {
 	o.MarginTop = 0
+	o.MarginBottom = 0
 	o.MarginLeft = 0
 	o.HorizontalLinkLength = 1
 	o.LabelPaddingLeft = 1
@@ -162,5 +165,9 @@ func (n *Node) Render(w io.Writer, o *RenderOptions) {
 		for i := 0; i < o.ChildrenMarginBottom; i++ {
 			fmt.Fprintln(w, childrenMarginBottom)
 		}
+	}
+
+	if n.IsRoot() {
+		fmt.Fprint(w, strings.Repeat("\n", o.MarginBottom))
 	}
 }

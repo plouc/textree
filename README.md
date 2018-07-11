@@ -45,6 +45,20 @@ o := textree.NewRenderOptions()
 root.Render(os.Stdout, o)
 ```
 
+### Listing a directory
+
+You can get something similar to the [`tree`](http://mama.indstate.edu/users/ice/tree/) command.
+
+````go
+tree, err := textTree.TreeFromDir("./")
+if err != nil {
+    fmt.Printf("%v\n", err)
+    return
+}
+	
+tree.Render(os.Stdout, textree.NewRenderOptions())
+````
+
 For complete usage of **textree**, see the full [package docs](https://godoc.org/github.com/plouc/textree).
 
 ## Examples
@@ -89,6 +103,7 @@ go run examples/main.go
     ├─── 1.4
     └─── 1.5
 
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   Dotted example
@@ -121,6 +136,7 @@ go run examples/main.go
     :
     :··· 1.4
     ···· 1.5
+
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -155,25 +171,41 @@ go run examples/main.go
     ├─── 1.4
     ╰─── 1.5
 
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   Compact example
     using RenderOptions.Compact()
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-┌ ROOT
-└─┬ 1
-  ├─┬ 1.1
-  │ ├── 1.1.1
-  │ └── 1.1.2
-  ├─┬ 1.2
-  │ └── 1.2.1
-  ├─┬ 1.3
-  │ ├── 1.3.1
-  │ ├─┬ 1.3.2
-  │ │ ├── 1.3.2.1
-  │ │ └── 1.3.2.2
-  │ └── 1.3.3
-  ├── 1.4
-  └── 1.5
+
+ ┌ ROOT
+ └─┬ 1
+   ├─┬ 1.1
+   │ ├── 1.1.1
+   │ └── 1.1.2
+   ├─┬ 1.2
+   │ └── 1.2.1
+   ├─┬ 1.3
+   │ ├── 1.3.1
+   │ ├─┬ 1.3.2
+   │ │ ├── 1.3.2.1
+   │ │ └── 1.3.2.2
+   │ └── 1.3.3
+   ├── 1.4
+   └── 1.5
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  Directory listing example
+    using TreeFromDir()
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+ ┌ ./snapshots
+ │
+ ├─── basic.snap
+ ├─── dotted.snap
+ └─── rounded.snap
+
 ```

@@ -86,8 +86,22 @@ func compactExample() {
 
 	o := textree.NewRenderOptions()
 	o.Compact()
+	o.MarginTop = 1
+	o.MarginBottom = 1
+	o.MarginLeft = 1
 
 	root.Render(os.Stdout, o)
+}
+
+func dirExample() {
+	title("Directory listing example", "using TreeFromDir()")
+
+	tree, err := textree.TreeFromDir("./snapshots")
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	tree.Render(os.Stdout, textree.NewRenderOptions())
 }
 
 func main() {
@@ -95,4 +109,5 @@ func main() {
 	dottedExample()
 	roundedExample()
 	compactExample()
+	dirExample()
 }
